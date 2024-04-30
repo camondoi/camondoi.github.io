@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol" placeholder="Stock Simple" type="text" value = "NVDA">
+            multi quote separated by space
+        </div>
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Symbol</th>
+                <th scope="col">Company</th>
+                <th scope="col">Wiki page</th>
+                <th scope="col">Shares Outstanding</th>
+                <th scope="col">Current price</th>
+                <th scope="col">Group</th>
+                <th scope="col">Market Cap</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+            <tr>
+                <td>
+                    {{stock.id}}
+                </td>
+                <td>
+                    {{stock.symbol}}
+                </td>
+                <td>
+                    {{stock.name}}
+                </td>
+                <td>
+                    <a href ="{{stock.link_wiki}}" target="_blank" rel="noopener noreferrer">{{stock.link_wiki}}</a>
+                </td>
+                <td>
+                    {{stock.volume}}
+                </td>
+                <td>
+                    {{ "$%.2f"|format(stock.current_price) }}
+                </td>
+                <td>
+                    {{stock.group_id}}
+                </td>
+                <td>
+                   {{stock.market_cap}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="mb-3">
+        * if the price and market cap is $0.00 and 0.0, it mean this time can not get stock price from Yahoo Finace.
+    </div>
+{% endblock %}

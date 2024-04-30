@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+<div class="mb-3">
+    {% for group in all_group_type %}
+        <label class="button"><a href="/?g={{group.group_type}}">{{group.group_type}}</a></label>
+    {% endfor %}
+</div>
+<div class="mb-3">
+    <h3><a href="https://en.wikipedia.org/wiki/S%26P_500" target="_blank" rel="noopener noreferrer">S&P 500 ({{sp500.symbol}})</a>: 
+        <a href ="https://finance.yahoo.com/quote/%5EGSPC/" target="_blank" rel="noopener noreferrer"><b> {{sp500.current_price}} </b></a></h3>
+</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Wiki page</th>
+                    <th scope="col">Shares Outstanding</th>
+                    <th scope="col">Current price</th>
+                    <th scope="col">Group</th>
+                    <th scope="col">Market Cap</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in stocks %}
+                <tr>
+                    <td>
+                        {{stock.id}}
+                    </td>
+                    <td>
+                        {{stock.symbol}}
+                    </td>
+                    <td>
+                        {{stock.name}}
+                    </td>
+                    <td>
+                        <a href ="{{stock.link_wiki}}" target="_blank" rel="noopener noreferrer">{{stock.link_wiki}}</a>
+                    </td>
+                    <td>
+                        {{stock.volume}}
+                    </td>
+                    <td>
+                        {{ "$%.2f"|format(stock.current_price) }}
+                    </td>
+                    <td>
+                        {{stock.group_id}}
+                    </td>
+                    <td>
+                       {{stock.market_cap}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="mb-3"><label class="button">Page: </label>
+            {% for page in range(25) %}
+                <label class="button_page"><a href="/?p={{page}}">{{page}}</a></label>
+            {% endfor %}
+        </div>
+        <div class="mb-3">
+            * if the price and market cap is $0.00 and 0.0, it mean this time can not get stock price from Yahoo Finace.
+        </div>
+        <script>
+            // Get current date and time
+            //var now = new Date();
+            //var datetime = now.toLocaleString();
+          
+            // Insert date and time into HTML
+            //document.getElementById("datetime").innerHTML = datetime;
+
+            //function formatCompactNumber(number) {
+                //const formatter = Intl.NumberFormat("en", { notation: "compact" });
+            //return formatter.format(number);
+            //}
+            //v1 = document.getElementById("v1").innerHTML;
+            //document.getElementById("v1").innerHTML =  formatCompactNumber(7422675383); //1000 + v1; //
+                // <p id="v1">-- '{:,.0f}'.format(stock.current_price*stock.volume)--</p>
+        </script>
+{% endblock %}

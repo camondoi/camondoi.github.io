@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+<div class="mb-3">
+    <h1>History</h1>
+</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Price at bought</th>
+                    <th scope="col">Time at bought</th>
+                    <th scope="col">Current price</th>
+                    <th scope="col">Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in stocks %}
+                <tr>
+                    <td>
+                        {{stock.symbol}}
+                    </td>
+                    <td>
+                        {{stock.amount}}
+                    </td>
+                    <td>
+                        {{stock.price}}
+                    </td>
+                    <td>
+                        {{stock.created_at}}
+                    </td>
+                    <td>
+                        {{stock.current_price}}
+                    </td>
+                    <td>
+                        {{(stock.current_price - stock.price)*stock.amount}}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td>
+                        Total money  = {{total + cash}}
+                    </td>
+                    <td>
+                        In Stock = {{total}}
+                    </td>
+                    <td>
+                        In Cash = {{cash}}
+                    </td>
+                    <td>
+                        <label id="datetime"></label>
+                    </td>
+                    <td>
+                        Total balance:
+                    </td>
+                    <td>
+                        {{ins}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script>
+            // Get current date and time
+            var now = new Date();
+            var datetime = now.toLocaleString();
+          
+            // Insert date and time into HTML
+            document.getElementById("datetime").innerHTML = datetime;
+        </script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy Stock
+{% endblock %}
+
+{% block main %}
+    <form action="/buy" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol" placeholder="Stock Simple" type="text" value = "NVDA">
+        </div>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="shares" placeholder="Number of Share" type="number">
+        </div>
+        <button class="btn btn-primary" type="submit">Buy</button>
+    </form>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Price at bought</th>
+                    <th scope="col">Time at bought</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in stocks %}
+                <tr>
+                    <td>
+                        {{stock.symbol}}
+                    </td>
+                    <td>
+                        {{stock.amount}}
+                    </td>
+                    <td>
+                        {{stock.price}}
+                    </td>
+                    <td>
+                        {{stock.created_at}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
